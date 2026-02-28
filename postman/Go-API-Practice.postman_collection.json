@@ -1,0 +1,46 @@
+{
+	"info": {
+		"_postman_id": "go-api-practice-collection",
+		"name": "Go API Practice",
+		"description": "練習用 API - Items / Users / Categories CRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{ "key": "baseUrl", "value": "http://localhost:8080" },
+		{ "key": "itemId", "value": "1" },
+		{ "key": "userId", "value": "1" },
+		{ "key": "categoryId", "value": "1" }
+	],
+	"item": [
+		{
+			"name": "Items",
+			"item": [
+				{ "name": "Get All Items", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/items", "host": ["{{baseUrl}}"], "path": ["api", "items"] }, "description": "取得所有項目" } },
+				{ "name": "Get Item by ID", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/items/{{itemId}}", "host": ["{{baseUrl}}"], "path": ["api", "items", "{{itemId}}"] }, "description": "依 ID 取得單一項目" } },
+				{ "name": "Create Item", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"測試項目\",\n  \"description\": \"這是描述\"\n}" }, "url": { "raw": "{{baseUrl}}/api/items", "host": ["{{baseUrl}}"], "path": ["api", "items"] }, "description": "新增項目（name 必填）" } },
+				{ "name": "Update Item", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"更新名稱\",\n  \"description\": \"更新描述\"\n}" }, "url": { "raw": "{{baseUrl}}/api/items/{{itemId}}", "host": ["{{baseUrl}}"], "path": ["api", "items", "{{itemId}}"] }, "description": "更新指定 ID 的項目" } },
+				{ "name": "Delete Item", "request": { "method": "DELETE", "header": [], "url": { "raw": "{{baseUrl}}/api/items/{{itemId}}", "host": ["{{baseUrl}}"], "path": ["api", "items", "{{itemId}}"] }, "description": "刪除指定 ID 的項目" } }
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{ "name": "Get All Users", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api", "users"] }, "description": "取得所有使用者" } },
+				{ "name": "Get User by ID", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "users", "{{userId}}"] }, "description": "依 ID 取得單一使用者" } },
+				{ "name": "Create User", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"王小明\",\n  \"email\": \"ming@example.com\"\n}" }, "url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api", "users"] }, "description": "新增使用者（name, email 必填）" } },
+				{ "name": "Update User", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"王大明\",\n  \"email\": \"daming@example.com\"\n}" }, "url": { "raw": "{{baseUrl}}/api/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "users", "{{userId}}"] }, "description": "更新指定 ID 的使用者" } },
+				{ "name": "Delete User", "request": { "method": "DELETE", "header": [], "url": { "raw": "{{baseUrl}}/api/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "users", "{{userId}}"] }, "description": "刪除指定 ID 的使用者" } }
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{ "name": "Get All Categories", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/categories", "host": ["{{baseUrl}}"], "path": ["api", "categories"] }, "description": "取得所有分類" } },
+				{ "name": "Get Category by ID", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/categories/{{categoryId}}", "host": ["{{baseUrl}}"], "path": ["api", "categories", "{{categoryId}}"] }, "description": "依 ID 取得單一分類" } },
+				{ "name": "Create Category", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"電子產品\"\n}" }, "url": { "raw": "{{baseUrl}}/api/categories", "host": ["{{baseUrl}}"], "path": ["api", "categories"] }, "description": "新增分類（name 必填）" } },
+				{ "name": "Update Category", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"3C 用品\"\n}" }, "url": { "raw": "{{baseUrl}}/api/categories/{{categoryId}}", "host": ["{{baseUrl}}"], "path": ["api", "categories", "{{categoryId}}"] }, "description": "更新指定 ID 的分類" } },
+				{ "name": "Delete Category", "request": { "method": "DELETE", "header": [], "url": { "raw": "{{baseUrl}}/api/categories/{{categoryId}}", "host": ["{{baseUrl}}"], "path": ["api", "categories", "{{categoryId}}"] }, "description": "刪除指定 ID 的分類" } }
+			]
+		}
+	]
+}
