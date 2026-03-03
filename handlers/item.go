@@ -39,18 +39,20 @@ func GetItemByID(c *gin.Context) {
 // CreateItem POST /api/items
 func CreateItem(c *gin.Context) {
 	var input models.Item
+	// Body: {"name": "物件1", "description": "描述"}
+	// JSON -> struct -> SQL
 	// ShouldBindJSON：把對方送來的 JSON body 自動轉成 input，並依 binding tag 做驗證
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	item, err := services.CreateItem(&input)
+	err := services.CreateItem(&input)
 	if err != nil {
 		respondError(c, err)
 		return
 	}
 	// c.JSON(201, item)：回傳狀態 201（成功新增）與 item 轉成的 JSON
-	c.JSON(http.StatusCreated, item)
+	c.JSON(http.StatusCreated, "新增成功")
 }
 
 // UpdateItem PUT /api/items/:id
@@ -64,12 +66,12 @@ func UpdateItem(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	item, err := services.UpdateItem(id, &input)
+	err := services.UpdateItem(id, &input)
 	if err != nil {
 		respondError(c, err)
 		return
 	}
-	c.JSON(http.StatusOK, item)
+	c.JSON(http.StatusOK, "更新成功")
 }
 
 // DeleteItem DELETE /api/items/:id

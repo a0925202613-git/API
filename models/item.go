@@ -2,6 +2,7 @@ package models
 
 import "time"
 
+// {"name": "物件1", "description": "描述"}
 // Item 供 API 練習用的資源
 type Item struct {
 	ID          int       `json:"id"`

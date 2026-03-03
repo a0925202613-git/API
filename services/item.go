@@ -54,6 +54,8 @@ func GetItemByID(id int) (*models.Item, error) {
 
 	var item models.Item
 
+	// id name  description created_at updated_at
+	// 1  物件1 描述  2024-01-01 2024-01-02
 	err := database.DB.QueryRow(query, id).Scan(
 		&item.ID,
 		&item.Name,
@@ -62,6 +64,7 @@ func GetItemByID(id int) (*models.Item, error) {
 		&item.UpdatedAt,
 	)
 
+	// 假設今天有錯誤
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, ErrNotFound
@@ -73,19 +76,31 @@ func GetItemByID(id int) (*models.Item, error) {
 }
 
 // CreateItem 新增項目
-func CreateItem(input *models.Item) (*models.Item, error) {
+func CreateItem(input *models.Item) error {
 	// 請實作：INSERT 進 items，回傳新增的資料
-	return nil, fmt.Errorf("請實作：INSERT items 並回傳（name=%s）", input.Name)
+	// Body: {"name": "物件1", "description": "描述"}
+	// JSON -> struct -> SQL
+
+	query := "INSERT INTO Items (ID, Name, Description) VALUES (?,?,?)"
+
+	if _, err := database.DB.Exec(query, input.ID, input.Name, input.Description); err != nil {
+		return fmt.Errorf("新增 item 失敗：%w", err)
+	}
+
+	return nil
 }
 
 // UpdateItem 更新項目
-func UpdateItem(id int, input *models.Item) (*models.Item, error) {
+func UpdateItem(id int, input *models.Item) error {
 	// 請實作：UPDATE 該 id，回傳更新後資料；不存在回傳 ErrNotFound
-	return nil, fmt.Errorf("請實作：UPDATE item 並回傳（id=%d）", id)
+	query := "UPDATE Items SET ID = ? WHERE = "
+	return fmt.Errorf("請實作：UPDATE item 並回傳（id=%d）", id)
 }
 
 // DeleteItem 刪除項目
 func DeleteItem(id int) error {
 	// 請實作：DELETE 該 id，不存在回傳 ErrNotFound
+	query := "DELETE FROM Items WHERE = id"
+
 	return fmt.Errorf("請實作：DELETE item（id=%d）", id)
 }
