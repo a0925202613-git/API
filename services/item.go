@@ -81,9 +81,9 @@ func CreateItem(input *models.Item) error {
 	// Body: {"name": "物件1", "description": "描述"}
 	// JSON -> struct -> SQL
 
-	query := "INSERT INTO Items (ID, Name, Description) VALUES (?,?,?)"
+	query := "INSERT INTO Items (Name, Description) VALUES (?,?)"
 
-	if _, err := database.DB.Exec(query, input.ID, input.Name, input.Description); err != nil {
+	if _, err := database.DB.Exec(query, input.Name, input.Description); err != nil {
 		return fmt.Errorf("新增 item 失敗：%w", err)
 	}
 
@@ -93,14 +93,49 @@ func CreateItem(input *models.Item) error {
 // UpdateItem 更新項目
 func UpdateItem(id int, input *models.Item) error {
 	// 請實作：UPDATE 該 id，回傳更新後資料；不存在回傳 ErrNotFound
-	query := "UPDATE Items SET ID = ? WHERE = "
-	return fmt.Errorf("請實作：UPDATE item 並回傳（id=%d）", id)
+	query := "UPDATE Items SET name = ?, description = ? WHERE id = ?"
+
+	// 2. 使用 Exec 執行動作
+	result, err := database.DB.Exec(query, input.Name, input.Description, id)
+	if err != nil {
+		return fmt.Errorf("更新 item 失敗: %w", err)
+	}
+
+	// 3. 檢查到底有沒有影響到任何資料
+	rowsAffected, err := result.rowsAffecte()
+	if err != nil {
+		return fmt.Errorf("取得受影響行數失敗：%w", err)
+	}
+
+	// 如果影響了 0 筆，代表這個 id 根本不存在
+	//if rowsAffected == 0 {
+		//return fmt.Errorf("record not found")
+	//}
+
+	return nil
 }
 
 // DeleteItem 刪除項目
 func DeleteItem(id int) error {
 	// 請實作：DELETE 該 id，不存在回傳 ErrNotFound
-	query := "DELETE FROM Items WHERE = id"
+	query := "DELETE FROM Items WHERE id = ?"
 
-	return fmt.Errorf("請實作：DELETE item（id=%d）", id)
+	// 2. 使用 Exec 執行動作
+	result, err := database.DB.Exec(query, id)
+	if err != nil {
+		return fmt.Errorf("刪除 item 失敗: %w", err)
+	}
+
+	// 3. 一樣要檢查有沒有真的刪除到東西
+	rowsAffecte, err := result.rowsAffecte()
+	if err != nil {
+		return fmt.Errorf("取得受影響行數失敗：%w", err)
+	}
+
+	// 如果影響了 0 筆，代表這個 id 根本不存在
+	//if rowsAffected == 0 {
+		//return fmt.Errorf("record not found")
+	//}
+
+	return nil
 }
